@@ -1,1 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
+
+$border-color: #dad7d7;
+$btn-primary-color: #23d9dc;
+$btn-secondary-color: #bbf3f4;
+$btn-danger-color: #dfa6b4;
+$font-family-main: verdana;
+
+* {
+    letter-spacing: 1px;
+    font-family: $font-family-main;
+}
+li {
+    list-style: none;
+}
+.text-center {
+    text-align: center;
+}
+.float-right {
+    float: right;
+}
+.btn {
+    padding: 10px;
+    border: 1px solid $border-color;
+    text-transform: uppercase;
+    margin: 5px;
+    max-width: 30vw;
+    &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+}
+.btn-primary {
+    background-color: $btn-primary-color;
+}
+.btn-secondary {
+    background-color: $btn-secondary-color;
+}
+.btn-danger {
+    background-color: $btn-danger-color;
+}
+
+.filter {
+    display: flex;
+    justify-content: center;
+    button { text-transform: capitalize;}
+}
+.list {
+    > div {
+        display: flex;
+        flex-direction: column;
+        flex-flow: row;
+        justify-content: space-between;
+        border-bottom: 1px solid $border-color;
+        padding: 10px 0;
+        .list-details {
+            display: flex;
+            align-items: center;
+            text-transform: capitalize;
+        }
+    }
+}
+
+.add-task {
+    margin-top: 40px;
+    input {
+        display: block;
+        width: 100%;
+        border: 1px solid $border-color;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    input[type=text] {
+        width: calc(100% - 25px);
+    }
+}

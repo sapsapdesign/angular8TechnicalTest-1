@@ -32,4 +32,6 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('tech-test app is running!');
   });
+
+  
 });

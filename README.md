@@ -57,3 +57,17 @@ Clone this project repository to your local machine, by running command
 #### Running unit tests
 `npm run test`
 
+----------
+
+#### Steps for the test
+* Create a To do list service (todolist.service)
+    ** Get the json using http request from the service
+        *** Create methods:
+            **** Add
+            **** Edit
+            **** Delete
+* Display the data from the json file (app.component)
+* Style the to do list
+* Create a to do list detail page
+    ** Style the detail page
+

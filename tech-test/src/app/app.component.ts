@@ -1,7 +1,7 @@
 import { TodoItemsService } from './services/todo-items/todo-items.service';
 import { Component } from '@angular/core';
 import { Lists } from './lists';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -17,16 +17,17 @@ export class AppComponent {
   objPatch: Lists;
   showEdit: any;
   successEdit: any;
+  successAdd: any;
 
   listFormAdd = new FormGroup({
-    label: new FormControl(''),
+    label: new FormControl('',[Validators.required]),
     description: new FormControl(''),
     category: new FormControl(''),
     done: new FormControl(false),
   });
 
   listFormEdit = new FormGroup({
-    label: new FormControl(''),
+    label: new FormControl('',[Validators.required]),
     description: new FormControl(''),
     category: new FormControl(''),
     done: new FormControl(),
@@ -86,6 +87,11 @@ export class AppComponent {
 
     this.todoItemsService.addToDo(task).subscribe((data) => {
       this.updateModifiedData();
+      this.successAdd = true;
+      this.listFormAdd.reset();
+      setTimeout(() => {
+        this.successAdd = false;
+      }, 3000);
     })
   }
 
@@ -94,7 +100,7 @@ export class AppComponent {
     this.successEdit = false;
     this.todoItemsService.getTodo(id).subscribe((data) => {
       this.listFormEdit = new FormGroup({
-        label: new FormControl(data.label),
+        label: new FormControl(data.label,[Validators.required]),
         description: new FormControl(data.description),
         category: new FormControl(data.category),
         done: new FormControl(data.done),

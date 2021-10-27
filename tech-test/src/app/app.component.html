@@ -30,13 +30,13 @@
             <input id="description" type="text" formControlName="description">
             <label for="category">Category: </label>
             <input id="category" type="text" formControlName="category">
-            <input class="btn btn-primary" type="submit" value="Edit">
+            <button class="btn btn-primary" [disabled]="!listFormEdit.valid">Edit</button>
         </form>
-        <div [hidden]="!successEdit">Task successfully edited</div>
+        <div [hidden]="!successEdit">Todo successfully edited</div>
     </div>
 
     <div class="add-task">
-        <h2>Add a new to do</h2>
+        <h2>Add a new  Todo</h2>
         <form [formGroup]="listFormAdd" (ngSubmit)="addTask()" >
             <label for="label">Label: </label>
             <input id="label" type="text" formControlName="label">
@@ -44,7 +44,8 @@
             <input id="description" type="text" formControlName="description">
             <label for="category">Category: </label>
             <input id="category" type="text" formControlName="category">
-            <input class="btn btn-primary" type="submit" value="Add">
+            <button class="btn btn-primary" [disabled]="!listFormAdd.valid">Add</button>
         </form>
+        <div [hidden]="!successAdd">Todo successfully added</div>
     </div>
 </div>

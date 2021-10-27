@@ -23,10 +23,17 @@
     },
     {
       "label": "Food shopping",
-      "description": "Get essentials from Sainsbury",
+      "description": "Get essentials from Sainsburys",
       "category": "Shopping",
       "done": false,
       "id": 4
+    },
+    {
+      "label": "Buy gift for Mrs",
+      "description": "Birthday coming up, need to buy gift",
+      "category": "Shopping",
+      "done": false,
+      "id": 5
     }
   ]
 }

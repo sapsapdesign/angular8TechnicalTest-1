@@ -63,14 +63,12 @@ li {
 
 .add-task {
     margin-top: 40px;
-    input {
+    input[type=text] {
+        width: calc(100% - 25px);
         display: block;
         width: 100%;
         border: 1px solid $border-color;
         padding: 10px;
         margin: 10px 0;
-    }
-    input[type=text] {
-        width: calc(100% - 25px);
     }
 }

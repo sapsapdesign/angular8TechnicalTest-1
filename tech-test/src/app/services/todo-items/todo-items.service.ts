@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Lists } from 'src/app/lists';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TodoItemsService {
-  apiPath = 'http://localhost:3000/tasks';
+  apiPath = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) { }
 

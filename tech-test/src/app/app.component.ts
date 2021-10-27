@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'To Do List';
+  title = 'tech-test';
   todoList: any;
   filterList: any;
   modifiedFilter: any = [];

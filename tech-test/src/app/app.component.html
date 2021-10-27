@@ -1,8 +1,7 @@
 
-<h1 class="text-center">{{title}}</h1>
+<h1>{{title}}</h1>
 
 <div class="content">
-    <span>tech-test app is running!</span>
     <ul class="filter">
         <li><button class="btn btn-secondary" (click)="filter('All')">All</button></li>
         <li *ngFor="let cat of filterList" (click)="filter(cat.value)"><button class="btn btn-secondary">{{cat.value}}</button></li>

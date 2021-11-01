@@ -18,7 +18,7 @@
       "label": "workout",
       "description": "1 Hour circuit training",
       "category": "health",
-      "done": true,
+      "done": false,
       "id": 3
     },
     {
@@ -29,9 +29,9 @@
       "id": 4
     },
     {
-      "label": "Buy gift for Mrs",
-      "description": "Birthday coming up, need to buy gift",
-      "category": "Shopping",
+      "label": "Test",
+      "description": "test",
+      "category": "test",
       "done": false,
       "id": 5
     }

@@ -29,6 +29,12 @@ export class TodoItemsService {
 
   addToDo(list: Lists) : Observable<any> {
     return this.httpClient.post(this.apiPath,list)
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      )
+   
   }
 
   editToDo(id,list:Lists): Observable<any> {

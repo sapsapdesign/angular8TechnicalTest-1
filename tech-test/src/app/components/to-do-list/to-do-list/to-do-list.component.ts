@@ -1,3 +1,4 @@
+import { map, timeout } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Lists } from 'src/app/lists';
@@ -9,7 +10,7 @@ import { TodoItemsService } from 'src/app/services/todo-items/todo-items.service
   styleUrls: ['./to-do-list.component.scss']
 })
 export class ToDoListComponent implements OnInit {
-
+  
   title = 'tech-test';
   todoList: any;
   public filterList: any;
@@ -20,12 +21,11 @@ export class ToDoListComponent implements OnInit {
   successEdit: any;
   successAdd: any;
 
-  listFormAdd = new FormGroup({
-    label: new FormControl('',[Validators.required]),
-    description: new FormControl(''),
-    category: new FormControl(''),
-    done: new FormControl(false),
-  });
+  // Info for Add to do component
+  addTodoTitle = 'Add new Todo';
+  addTodoLabel = 'Label';
+  addTodoDesc = 'Description';
+  addTodoCat = 'Category';
 
   listFormEdit = new FormGroup({
     label: new FormControl('',[Validators.required]),
@@ -70,6 +70,13 @@ export class ToDoListComponent implements OnInit {
     const task = new Lists();
     task.done = status;
     this.todoItemsService.updateDoneStatus(id,task).subscribe((data) => {
+      this.modifiedTodoList = this.modifiedTodoList.map(item => {
+        if (data.id === item.id) {          
+          return {...item,done: data.done}
+        } else {
+          return item;
+        } 
+      })
     })
   }
 
@@ -79,54 +86,50 @@ export class ToDoListComponent implements OnInit {
     })
   }
 
-  addTask() {
-    const task = new Lists();
-    task.label = this.listFormAdd.value.label;
-    task.description = this.listFormAdd.value.description;
-    task.category = this.listFormAdd.value.category;
-    task.done = this.listFormAdd.value.done;
-
-    this.todoItemsService.addToDo(task).subscribe((data) => {
-      this.updateModifiedData();
-      this.updateModifiedData = data;
-      this.successAdd = true;
-      this.listFormAdd.reset();
-      setTimeout(() => {
-        this.successAdd = false;
-      }, 3000);
-    })
-  }
-
-  editTask(id) {
+  editTask(item) {
+    // Open then populate edit form
     this.showEdit = true;
     this.successEdit = false;
-    this.todoItemsService.getTodo(id).subscribe((data) => {
-      this.listFormEdit = new FormGroup({
-        label: new FormControl(data.label,[Validators.required]),
-        description: new FormControl(data.description),
-        category: new FormControl(data.category),
-        done: new FormControl(data.done),
-        id: new FormControl(data.id),
-      });
-    })
+    this.listFormEdit = new FormGroup({
+      label: new FormControl(item.label,[Validators.required]),
+      description: new FormControl(item.description),
+      category: new FormControl(item.category),
+      done: new FormControl(item.done),
+      id: new FormControl(item.id),
+    });
   }
-  
+
   submitEditTask() {
     const task = new Lists();
+    task.id = this.listFormEdit.value.id;
     task.label = this.listFormEdit.value.label;
     task.description = this.listFormEdit.value.description;
     task.category = this.listFormEdit.value.category;
     task.done = this.listFormEdit.value.done;
     
-    this.todoItemsService.editToDo(this.listFormEdit.value.id,task).subscribe((data) => {
+    this.todoItemsService.editToDo(task.id,task).subscribe((data) => {    
+      // Update the data list with new changes 
+      this.modifiedTodoList = this.modifiedTodoList.map(item => {
+        if (data.id === item.id) {          
+          return {...item,label:data.label,description: data.description,category: data.category}
+        } else {
+          return item;
+        } 
+      })
       this.successEdit = true;
-      this.updateModifiedData();
+      setTimeout(() => {
+        this.successEdit = false;
+      }, 2000);
     })
   }
 
-  deleteTask(id) {
-    this.todoItemsService.deleteTodo(id).subscribe((data) => {
-      this.updateModifiedData();
+  deleteTask(item) {
+    this.todoItemsService.deleteTodo(item.id).subscribe((data) => { 
+      this.modifiedTodoList.forEach((value,index) => {
+        if(value == item) {
+          this.modifiedTodoList.splice(index,1)
+        }
+      });
     });
   }
 

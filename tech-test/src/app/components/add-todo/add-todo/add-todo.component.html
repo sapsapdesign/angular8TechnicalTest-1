@@ -1,0 +1,14 @@
+<div class="add-task">
+    <h2>{{title}}</h2>
+    <form [formGroup]="listFormAdd" (ngSubmit)="addTask()" >
+        <label for="label">{{label}}: </label>
+        <input id="label" type="text" formControlName="label">
+        <label for="description">{{description}}: </label>
+        <input id="description" type="text" formControlName="description">
+        <label for="category">{{category}}: </label>
+        <input id="category" type="text" formControlName="category">
+        <button class="btn btn-primary" [disabled]="!listFormAdd.valid">Add</button>
+        <button class="btn btn-secondary" (clicked)="reset()" [disabled]="!listFormAdd.valid">Reset</button>
+    </form>
+    <div [hidden]="!successAdd">Todo successfully added</div>
+</div>

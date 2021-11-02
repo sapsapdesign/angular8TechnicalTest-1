@@ -17,8 +17,8 @@
                 {{item.label}}
             </div>
             <div class="list-options">
-                <button class="btn btn-primary" (click)="editTask(item.id)">Edit</button>
-                <button class="btn btn-danger" (click)="deleteTask(item.id)">Delete</button>
+                <button class="btn btn-primary" (click)="editTask(item)">Edit</button>
+                <button class="btn btn-danger" (click)="deleteTask(item)">Delete</button>
             </div>
         </div>
     </div>
@@ -34,21 +34,9 @@
             <input id="category" type="text" formControlName="category">
             <button class="btn btn-primary" [disabled]="!listFormEdit.valid">Edit</button>
         </form>
-        <div [hidden]="!successEdit">Todo successfully edited</div>
+        <div [hidden]="!successEdit" class="color-danger">Todo successfully edited</div>
     </div>
 
-    <div class="add-task">
-        <h2>Add a new Todo</h2>
-        <form [formGroup]="listFormAdd" (ngSubmit)="addTask()" >
-            <label for="label">Label: </label>
-            <input id="label" type="text" formControlName="label">
-            <label for="description">Description: </label>
-            <input id="description" type="text" formControlName="description">
-            <label for="category">Category: </label>
-            <input id="category" type="text" formControlName="category">
-            <button class="btn btn-primary" [disabled]="!listFormAdd.valid">Add</button>
-        </form>
-        <div [hidden]="!successAdd">Todo successfully added</div>
-    </div>
+    <app-add-todo [title]="addTodoTitle" [label]="addTodoLabel" [description]="addTodoDesc" [category]="addTodoCat"></app-add-todo>
 
 </div>

@@ -5,13 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ListFilterComponent } from './components/list-filter/list-filter/list-filter.component';
 import { ToDoListComponent } from './components/to-do-list/to-do-list/to-do-list.component';
+import { AddTodoComponent } from './components/add-todo/add-todo/add-todo.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ListFilterComponent,
-    ToDoListComponent
+    ToDoListComponent,
+    AddTodoComponent
   ],
   imports: [
     BrowserModule,

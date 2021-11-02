@@ -25,14 +25,14 @@
       "label": "Food shopping",
       "description": "Get essentials from Sainsburys",
       "category": "Shopping",
-      "done": false,
+      "done": true,
       "id": 4
     },
     {
       "label": "Test",
       "description": "test",
       "category": "test",
-      "done": false,
+      "done": true,
       "id": 5
     }
   ]

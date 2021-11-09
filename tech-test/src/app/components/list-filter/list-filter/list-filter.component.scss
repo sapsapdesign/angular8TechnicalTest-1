@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+
+$border-color: #dad7d7;
+$btn-primary-color: #23d9dc;
+$btn-secondary-color: #bbf3f4;
+$btn-danger-color: #dfa6b4;
+$font-family-main: verdana;
+
+* {
+    letter-spacing: 1px;
+    font-family: $font-family-main;
+}
+li {
+    list-style: none;
+}
+.text-center {
+    text-align: center;
+}
+.float-right {
+    float: right;
+}
+.btn {
+    padding: 10px;
+    border: 1px solid $border-color;
+    text-transform: uppercase;
+    margin: 5px;
+    max-width: 30vw;
+    border-radius: 5px;
+    &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+}
+.btn-primary {
+    background-color: $btn-primary-color;
+}
+.btn-secondary {
+    background-color: $btn-secondary-color;
+}
+.btn-danger {
+    background-color: $btn-danger-color;
+}
+.color-danger {color: $btn-danger-color; }
+.filter {
+    padding-left: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+       display: none;
+    }
+    button { text-transform: capitalize; border-radius: 20px;}
+}
+
+

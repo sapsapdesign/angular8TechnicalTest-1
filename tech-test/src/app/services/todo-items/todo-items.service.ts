@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Lists } from 'src/app/lists';
 import { environment } from '../../../environments/environment';
@@ -10,11 +10,30 @@ import { environment } from '../../../environments/environment';
 })
 
 export class TodoItemsService {
+
   apiPath = environment.apiUrl;
+  listData: Lists[];
+
+  private content = new BehaviorSubject<any>([]);
+  public share = this.content.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
+  updateData(data) {
+    this.content.next(data);
+  }
+
   getAllTodo(): Observable<any> {
+    return this.httpClient.get<any[]>(this.apiPath)
+    .pipe(
+      map((res) => {
+        this.listData = res;
+        return this.listData;
+      })
+    )
+  }
+
+  updateShareList() {
     return this.httpClient.get<any[]>(this.apiPath)
     .pipe(
       map((res) => {
@@ -34,13 +53,13 @@ export class TodoItemsService {
           return res;
         })
       )
-   
   }
 
   editToDo(id,list:Lists): Observable<any> {
     return this.httpClient.patch(`${this.apiPath}/`+id,list)
     .pipe(
       map((res) => {
+        this.updateShareList().subscribe((data)=>this.content.next(data));
         return res;
       })
     )
@@ -54,8 +73,10 @@ export class TodoItemsService {
     return this.httpClient.patch(`${this.apiPath}/`+id,list)
     .pipe(
       map((res) => {
+        this.updateShareList().subscribe((data)=>this.content.next(data));
         return res;
       })
     )
   }
+
 }

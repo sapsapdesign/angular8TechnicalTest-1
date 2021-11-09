@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EventEmitter } from 'events';
+
 import { Lists } from 'src/app/lists';
 import { TodoItemsService } from 'src/app/services/todo-items/todo-items.service';
 
@@ -37,12 +37,10 @@ export class AddTodoComponent implements OnInit {
     const task = new Lists();
     task.label = this.listFormAdd.value.label;
     task.description = this.listFormAdd.value.description;
-    task.category = this.listFormAdd.value.category;
+    task.category = this.listFormAdd.value.category.toLowerCase();
     task.done = this.listFormAdd.value.done;
 
     this.todoItemsService.addToDo(task).subscribe((data) => {
-      // this.updateModifiedData();
-      // this.updateModifiedData = data;
       this.newItemEvent.emit(data);
       this.successAdd = true;
       this.listFormAdd.reset();

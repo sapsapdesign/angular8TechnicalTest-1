@@ -18,22 +18,8 @@
       "label": "workout",
       "description": "1 Hour circuit training",
       "category": "health",
-      "done": false,
+      "done": true,
       "id": 3
-    },
-    {
-      "label": "Food shopping",
-      "description": "Get essentials from Sainsburys",
-      "category": "Shopping",
-      "done": true,
-      "id": 4
-    },
-    {
-      "label": "Test",
-      "description": "test",
-      "category": "test",
-      "done": true,
-      "id": 5
     }
   ]
 }

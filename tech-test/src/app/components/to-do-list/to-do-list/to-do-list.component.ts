@@ -1,8 +1,9 @@
-import { map, timeout } from 'rxjs/operators';
+import { map, switchMap, timeout } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Lists } from 'src/app/lists';
 import { TodoItemsService } from 'src/app/services/todo-items/todo-items.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-to-do-list',
@@ -11,21 +12,23 @@ import { TodoItemsService } from 'src/app/services/todo-items/todo-items.service
 })
 export class ToDoListComponent implements OnInit {
   
-  title = 'tech-test';
-  todoList: any;
-  public filterList: any;
-  modifiedFilter: any = [];
-  modifiedTodoList: any = [];
+  title:string = 'tech-test';
+  lists: Lists[];
+  // public filterList: any;
+  public modifiedFilter: any;
+  modifiedList: Lists[];
   objPatch: Lists;
-  showEdit: any;
-  successEdit: any;
-  successAdd: any;
+  showEdit: boolean;
+  successEdit: boolean;
+  successAdd: boolean;
 
   // Info for Add to do component
-  addTodoTitle = 'Add new Todo';
-  addTodoLabel = 'Label';
-  addTodoDesc = 'Description';
-  addTodoCat = 'Category';
+  addTodoTitle:string = 'Add new Todo';
+  addTodoLabel:string = 'Label';
+  addTodoDesc:string = 'Description';
+  addTodoCat:string = 'Category';
+
+  data:any;
 
   listFormEdit = new FormGroup({
     label: new FormControl('',[Validators.required]),
@@ -40,49 +43,29 @@ export class ToDoListComponent implements OnInit {
   ) {}
   
   ngOnInit() {
-    this.getToDoLists();
+    this.getAllTodoList();
   }
 
-  getToDoLists() {
-    this.todoItemsService.getAllTodo().subscribe((data) => {
-      this.todoList = data;
-      this.modifiedTodoList = data;
-      this.modifiedTodoList.forEach(element => {
-        this.modifiedFilter.push({value: element.category});
-      });
-      this.filterList = this.getUniqueListBy(this.modifiedFilter, 'value' );
+  getAllTodoList() {
+    return this.todoItemsService.getAllTodo().subscribe((data) => {
+      this.todoItemsService.updateData(data);
+      this.todoItemsService.share.subscribe((data) => {
+        this.modifiedList = data;
+      })
     })
   }
 
-  filter(cat) {
-    if (cat == 'All') {
-      this.updateModifiedData();
-    } else {
-      this.todoItemsService.getAllTodo().subscribe((data) => {
-        this.modifiedTodoList = data.filter((item) => {
-          return item.category == cat;
-        });
-      })
-    }
-  }
-  
   toggleDone(id,status) {
     const task = new Lists();
     task.done = status;
     this.todoItemsService.updateDoneStatus(id,task).subscribe((data) => {
-      this.modifiedTodoList = this.modifiedTodoList.map(item => {
-        if (data.id === item.id) {          
+      this.modifiedList = this.modifiedList.map(item => {
+        if (data.id === item.id) {        
           return {...item,done: data.done}
         } else {
           return item;
         } 
       })
-    })
-  }
-
-  updateModifiedData() {
-    this.todoItemsService.getAllTodo().subscribe((data) => {
-      this.modifiedTodoList = data;
     })
   }
 
@@ -109,7 +92,7 @@ export class ToDoListComponent implements OnInit {
     
     this.todoItemsService.editToDo(task.id,task).subscribe((data) => {    
       // Update the data list with new changes 
-      this.modifiedTodoList = this.modifiedTodoList.map(item => {
+      this.modifiedList = this.modifiedList.map(item => {
         if (data.id === item.id) {          
           return {...item,label:data.label,description: data.description,category: data.category}
         } else {
@@ -125,17 +108,32 @@ export class ToDoListComponent implements OnInit {
 
   deleteTask(item) {
     this.todoItemsService.deleteTodo(item.id).subscribe((data) => { 
-      this.modifiedTodoList.forEach((value,index) => {
+      this.modifiedList.forEach((value,index) => {
         if(value == item) {
-          this.modifiedTodoList.splice(index,1)
+          this.modifiedList.splice(index,1)
         }
       });
     });
   }
 
-  getUniqueListBy(arr, key) {
-    return [...new Map(arr.map(item => [item[key], item])).values()]
+  // Add new todo from addToDo component addItemEvent in the directive
+  addItem(event) {
+    this.modifiedList.push(event);
   }
 
-
+  filterList(event) {    
+    if (event != 'All') {
+      this.todoItemsService.share.subscribe((data) => {
+        console.log('data',data);
+        this.modifiedList = data.filter((list) => {
+          return list.category == event;
+        })
+      });
+    } else {
+      this.todoItemsService.share.subscribe((data) => {
+        this.modifiedList = data;
+      })
+    }
+  }
+  
 }

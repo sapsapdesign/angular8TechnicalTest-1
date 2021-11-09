@@ -5,13 +5,11 @@
 
     <div class="status">{{title}} app is running!</div>
     
-    <ul class="filter">
-        <li><button class="btn btn-secondary" (click)="filter('All')">All</button></li>
-        <li *ngFor="let cat of filterList" (click)="filter(cat.value)"><button class="btn btn-secondary">{{cat.value}}</button></li>
-    </ul>
+    
+    <app-list-filter (filterEvent)="filterList($event)" [filterData]="modifiedList"></app-list-filter>
 
     <div class="list">
-        <div *ngFor="let item of modifiedTodoList">
+        <div *ngFor="let item of modifiedList">
             <div class="list-details"> 
                 <input type="checkbox" name="done" (change)="toggleDone(item.id, $event.target.checked)" [checked]="item.done != false">&nbsp;
                 {{item.label}}
@@ -37,6 +35,6 @@
         <div [hidden]="!successEdit" class="color-danger">Todo successfully edited</div>
     </div>
 
-    <app-add-todo [title]="addTodoTitle" [label]="addTodoLabel" [description]="addTodoDesc" [category]="addTodoCat"></app-add-todo>
+    <app-add-todo (newItemEvent)="addItem($event)" [title]="addTodoTitle" [label]="addTodoLabel" [description]="addTodoDesc" [category]="addTodoCat"></app-add-todo>
 
 </div>

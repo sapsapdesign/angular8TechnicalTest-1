@@ -1,9 +1,10 @@
-import { map, switchMap, timeout } from 'rxjs/operators';
+// import { map, switchMap, timeout } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Lists } from 'src/app/lists';
 import { TodoItemsService } from 'src/app/services/todo-items/todo-items.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+// import { BehaviorSubject, Observable } from 'rxjs';
+// import { ListFilterComponent } from '../../list-filter/list-filter/list-filter.component';
 
 @Component({
   selector: 'app-to-do-list',

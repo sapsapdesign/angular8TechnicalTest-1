@@ -18,7 +18,7 @@
       "label": "workout",
       "description": "1 Hour circuit training",
       "category": "health",
-      "done": true,
+      "done": false,
       "id": 3
     }
   ]

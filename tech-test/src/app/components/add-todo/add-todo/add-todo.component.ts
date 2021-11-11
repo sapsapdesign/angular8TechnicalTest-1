@@ -30,7 +30,7 @@ export class AddTodoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.label);
+    // console.log(this.label);
   }
 
   addTask() {
